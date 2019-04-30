@@ -32,6 +32,30 @@ server.post('/api/zoos', (req, res) => {
   }
 })
 
+server.get('/api/zoos', (req, res) => {
+  db.select()
+  .from('zoos')
+  .then(zoo => {
+    res.status(201).json(zoo)
+  })
+  .catch(() => {
+    res.status(500).send('We could not retrieve this table')
+  })
+})
+
+server.get('/api/zoos/:id', (req, res) => {
+  const {id} = req.params
+  db.select()
+  .from('zoos')
+  .where({id})
+  .then(zoo => {
+    res.status(201).json(zoo)
+  })
+  .catch(() => {
+    res.status(500).send('We could not retrieve a zoo at that id')
+  })
+})
+
 const port = 3300;
 server.listen(port, function() {
   console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
