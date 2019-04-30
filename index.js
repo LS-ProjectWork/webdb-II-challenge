@@ -65,7 +65,21 @@ server.delete('/api/zoos/:id', (req, res) => {
     res.status(201).json(zoo)
   })
   .catch(() => {
-    res.status(404).send('We could not delete this zoo')
+    res.status(500).send('We could not delete this zoo')
+  })
+})
+
+server.put('/api/zoos/:id', (req, res) => {
+  const changes = req.body
+  const {id} = req.params
+  db('zoos')
+  .where({id})
+  .update(changes)
+  .then(zoo => {
+    res.status(201).json(zoo)
+  })
+  .catch(() => {
+    res.status(500).send('We could not update this zoo')
   })
 })
 
